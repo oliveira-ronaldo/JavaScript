@@ -11,7 +11,7 @@ const perguntas = [
     alternativas: ['Rio de Janeiro', 'Brasília', 'São Paulo', 'Salvador'],
     respostaCorreta: 'Brasília',
     premiacao: {
-      acertou: 100,
+      acertou: 200,
       errou: -50,
       parou: 25
     }
@@ -31,7 +31,7 @@ const perguntas = [
     alternativas: ['Em 1800', 'Em 1886', 'Em 1999', 'Em 1994'],
     respostaCorreta: 'Em 1994',
     premiacao: {
-      acertou: 300,
+      acertou: 200,
       errou: -150,
       parou: 100
     }
@@ -41,7 +41,7 @@ const perguntas = [
     alternativas: ['Aipim','Musa Cavendish', 'Musa Suculenta', 'Banana Nanica'],
     respostaCorreta: 'Musa Cavendish',
     premiacao: {
-      acertou: 400,
+      acertou: 200,
       errou: -200,
       parou: 150
     }
@@ -51,12 +51,12 @@ const perguntas = [
     alternativas: ['Jord Cluney', 'Steve Jobs', 'Mark Zuckerberg', 'Tim Berners_Lee'],
     respostaCorreta: 'Steve Jobs',
     premiacao: {
-      acertou: 500,
+      acertou: 200,
       errou: -250,
       parou: 200
     }
  }
- // Adicione mais perguntas conforme necessário
+
 ];
 
 let pontos = 0;

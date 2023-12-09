@@ -1,0 +1,15 @@
+{
+    "name": "jogo_do_milhao",
+    "version": "0.0.1",
+    "description": "Jogo de perguntas e respostas, com bonificação",
+    "main": "jogo.js",
+    "scripts": {
+        "start": "node jogo.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Ronaldo",
+    "license": "ISC",
+    "dependencies": {
+        "prompt-sync": "4.2.0"
+    }
+}
