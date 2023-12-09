@@ -1,77 +1,89 @@
 const readline = require('readline');
 
 const rl = readline.createInterface({
- input: process.stdin,
- output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
 const perguntas = [
- {
+  {
     pergunta: 'Qual é a capital do Brasil?',
-    alternativas: ['Rio de Janeiro', 'Brasília', 'São Paulo', 'Salvador'],
-    respostaCorreta: 'Brasília',
+    alternativas: ['A) Rio de Janeiro', 'B) Brasília', 'C) São Paulo', 'D) Salvador'],
+    respostaCorreta: 'B',
     premiacao: {
       acertou: 200,
       errou: -50,
       parou: 25
     }
- },
- {
-    pergunta: 'Qual é o maior planeta do nosso sistema solar?',
-    alternativas: ['Terra', 'Marte', 'Netuno', 'Júpiter'],
-    respostaCorreta: 'Júpiter',
+  },
+  {
+    pergunta: 'Em que ano aconteceu o descobrimento do Brasil?',
+    alternativas: ['A) 1400', 'B) 1700', 'C) 1500', 'D) 1900'],
+    respostaCorreta: 'C',
     premiacao: {
       acertou: 200,
       errou: -100,
       parou: 50
     }
- },
- {
-    pergunta: 'Em que ano Airton Senna faleceu ?',
-    alternativas: ['Em 1800', 'Em 1886', 'Em 1999', 'Em 1994'],
-    respostaCorreta: 'Em 1994',
+  },
+  {
+    pergunta: 'Em que ano Ayrton Senna faleceu?',
+    alternativas: ['A) Em 1800', 'B) Em 1886', 'C) Em 1999', 'D) Em 1994'],
+    respostaCorreta: 'D',
     premiacao: {
       acertou: 200,
       errou: -150,
       parou: 100
     }
- },
- {
+  },
+  {
     pergunta: 'Qual o nome científico da Banana Nanica?',
-    alternativas: ['Aipim','Musa Cavendish', 'Musa Suculenta', 'Banana Nanica'],
-    respostaCorreta: 'Musa Cavendish',
+    alternativas: ['A) Aipim', 'B) Musa Cavendish', 'C) Musa Suculenta', 'D) Banana Nanica'],
+    respostaCorreta: 'B',
     premiacao: {
       acertou: 200,
       errou: -200,
       parou: 150
     }
- },
- {
-    pergunta: 'Quem é o fundador da empresa Aplle?',
-    alternativas: ['Jord Cluney', 'Steve Jobs', 'Mark Zuckerberg', 'Tim Berners_Lee'],
-    respostaCorreta: 'Steve Jobs',
+  },
+  {
+    pergunta: 'Quem é o fundador da empresa Apple?',
+    alternativas: ['A) Jord Cluney', 'B) Steve Jobs', 'C) Mark Zuckerberg', 'D) Tim Berners-Lee'],
+    respostaCorreta: 'B',
     premiacao: {
       acertou: 200,
       errou: -250,
       parou: 200
     }
- }
-
+  }
 ];
 
-let pontos = 0;
+let dinheiro = 0; // Pontuação em mil reais
 let indicePergunta = 0;
+let nomeJogador = '';
+
+function informarDadosRodada() {
+  console.log('\n******************************Nome do jogador******************************');
+  console.log(`Bem-vindo(a), ${nomeJogador}!\n`);
+  console.log(`**Número/Nome da rodada: Rodada ${indicePergunta + 1}`);
+  console.log('******************Premiação******************');
+  console.log(`- Se acertar: R$${perguntas[indicePergunta].premiacao.acertou} mil`);
+  console.log(`- Se errar: R$${Math.abs(perguntas[indicePergunta].premiacao.errou)} mil`);
+  console.log(`- Se parar: R$${perguntas[indicePergunta].premiacao.parou} mil`);
+}
 
 function jogarPergunta() {
- const pergunta = perguntas[indicePergunta];
+  const pergunta = perguntas[indicePergunta];
 
- rl.question(pergunta.pergunta + ' ', (resposta) => {
-    if (resposta.toLowerCase() === pergunta.respostaCorreta.toLowerCase()) {
-      pontos += pergunta.premiacao.acertou;
-      console.log('Resposta correta! Você ganhou ' + pergunta.premiacao.acertou + ' pontos. Pontuação atual: ' + pontos + ' pontos.');
+  rl.question(`${pergunta.pergunta}\n${pergunta.alternativas.join('\n')}\nSua resposta (digite a letra correspondente): `, (resposta) => {
+    informarDadosRodada();
+
+    if (resposta.toUpperCase() === pergunta.respostaCorreta) {
+      dinheiro += pergunta.premiacao.acertou;
+      console.log(`******************Resultado******************\nAcertou a pergunta! Você ganhou R$${pergunta.premiacao.acertou} mil. Pontuação atual: R$${dinheiro} mil.`);
     } else {
-      pontos += pergunta.premiacao.errou;
-      console.log('Resposta incorreta! Você perdeu ' + pergunta.premiacao.errou + ' pontos. Pontuação atual: ' + pontos + ' pontos.');
+      dinheiro += pergunta.premiacao.errou;
+      console.log(`******************Resultado******************\nErrou a pergunta! Você perdeu R$${Math.abs(pergunta.premiacao.errou)} mil. Pontuação atual: R$${dinheiro} mil.`);
     }
 
     indicePergunta++;
@@ -79,13 +91,43 @@ function jogarPergunta() {
     if (indicePergunta < perguntas.length) {
       jogarPergunta();
     } else {
-      rl.close();
+      informarDadosFinais();
+      oferecerOpcaoReiniciarJogo();
     }
- });
+  });
 }
 
-jogarPergunta();
+function informarDadosFinais() {
+  console.log(`\n******************** Informações Finais ********************`);
+  console.log(`- Nome do jogador: ${nomeJogador}`);
+  console.log(`- Rodada em que parou: Rodada ${indicePergunta + 1}`);
+  console.log(`- Resposta correta da última pergunta respondida: ${perguntas[indicePergunta - 1].respostaCorreta}`);
+  console.log(`- Premiação Final: R$${dinheiro} mil`);
+}
+
+function oferecerOpcaoReiniciarJogo() {
+  rl.question('\nDeseja jogar novamente? (Digite "sim" ou "nao"): ', (resposta) => {
+    if (resposta.toLowerCase() === 'sim') {
+      reiniciarJogo();
+    } else {
+      rl.close();
+    }
+  });
+}
+
+function reiniciarJogo() {
+  indicePergunta = 0;
+  dinheiro = 0;
+  informarDadosRodada();
+  jogarPergunta();
+}
+
+rl.question('Digite seu nome: ', (nome) => {
+  nomeJogador = nome;
+  informarDadosRodada();
+  jogarPergunta();
+});
 
 rl.on('close', () => {
- console.log('Fim do jogo! Pontuação final: ' + pontos + ' pontos.');
+  console.log(`\nFim do jogo! Pontuação final: R$${dinheiro} mil.`);
 });
