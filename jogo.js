@@ -75,12 +75,18 @@ function informarDadosRodada() {
 function jogarPergunta() {
   const pergunta = perguntas[indicePergunta];
 
-  rl.question(`${pergunta.pergunta}\n${pergunta.alternativas.join('\n')}\nSua resposta (digite a letra correspondente): `, (resposta) => {
+  rl.question(`${pergunta.pergunta}\n${pergunta.alternativas.join('\n')}\nSua resposta (digite a letra correspondente ou "P" para parar): `, (resposta) => {
     informarDadosRodada();
 
     if (resposta.toUpperCase() === pergunta.respostaCorreta) {
       dinheiro += pergunta.premiacao.acertou;
       console.log(`******************Resultado******************\nAcertou a pergunta! Você ganhou R$${pergunta.premiacao.acertou} mil. Pontuação atual: R$${dinheiro} mil.`);
+    } else if (resposta.toUpperCase() === 'P') {
+      dinheiro += pergunta.premiacao.parou;
+      console.log(`******************Resultado******************\nVocê decidiu parar. Ganhou R$${pergunta.premiacao.parou} mil. Pontuação atual: R$${dinheiro} mil.`);
+      informarDadosFinais();
+      oferecerOpcaoReiniciarJogo();
+      return;
     } else {
       dinheiro += pergunta.premiacao.errou;
       console.log(`******************Resultado******************\nErrou a pergunta! Você perdeu R$${Math.abs(pergunta.premiacao.errou)} mil. Pontuação atual: R$${dinheiro} mil.`);
