@@ -5,7 +5,7 @@
  Este projeto é um jogo do milhão, desenvolvido em Node para a disciplina de Web.
 
  ## Desenvolvedor: 
- ### Ronaldo Oliveira
+ Ronaldo Oliveira
 
  ## Regras do Jogo
  O jogo consiste em 5 etapas, a cada etapa é feita uma pergunta que contém 4 alternativas, as quias o usuário deve digitar a letra que corresponde a resposta correta. Em caso de erro, o usuário perderá um valor em dinheiro. em caso de acerto, o usuário receberá 200 mil reais.
